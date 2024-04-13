@@ -34,12 +34,13 @@ pub const MemoryOperationError_kNotSupportAllocateExecutableMemory: MemoryOperat
 pub const MemoryOperationError_kNotEnough: MemoryOperationError = 3;
 pub const MemoryOperationError_kNone: MemoryOperationError = 4;
 pub type MemoryOperationError = ::std::os::raw::c_uint;
-extern "C" {
-    pub fn CodePatch(
-        address: *mut ::std::os::raw::c_void,
-        buffer: *mut ::std::os::raw::c_uchar,
-        buffer_size: ::std::os::raw::c_uint,
-    ) -> MemoryOperationError;
+pub unsafe fn CodePatch(
+    address: *mut ::std::os::raw::c_void,
+    buffer: *mut ::std::os::raw::c_uchar,
+    buffer_size: ::std::os::raw::c_uint,
+) -> MemoryOperationError {
+    // STUB; function renamed in upstream, but we don't use it and we don't care.
+    return MemoryOperationError_kNone;
 }
 extern "C" {
     pub fn log_set_level(level: ::std::os::raw::c_int);
