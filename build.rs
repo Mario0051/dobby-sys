@@ -30,7 +30,7 @@ fn link_dobby() {
     let lib_path = Path::new("dobby_static").join(os_dir).join(arch_dir);
     println!("cargo:rustc-link-search=native={}", lib_path.display());
     println!("cargo:rustc-link-lib=static=dobby");
-    if target_os != "android" {
+    if target_os != "android" && target_os != "windows" {
         println!("cargo:rustc-link-lib={}", stdlib);
     }
 }
