@@ -18,6 +18,9 @@ fn link_dobby() {
     let target_env = std::env::var("CARGO_CFG_TARGET_ENV").unwrap();
     let stdlib = std::env::var("CXXSTDLIB").unwrap_or("stdc++".to_owned());
 
+    let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
+    let crate_root = Path::new(&manifest_dir);
+
     let os_dir = match target_os.as_str() {
         "macos" | "ios" => "darwin",
         _ => &target_os,
@@ -28,7 +31,8 @@ fn link_dobby() {
         _ => &target_arch,
     };
 
-    let lib_path = Path::new("dobby_static").join(os_dir).join(arch_dir);
+    let lib_path = crate_root.join("dobby_static").join(os_dir).join(arch_dir);
+
     println!("cargo:rustc-link-search=native={}", lib_path.display());
     println!("cargo:rustc-link-lib=static=dobby");
     if target_os != "android" && !(target_os == "windows" && (target_env.is_empty() || target_env == "msvc")) {
