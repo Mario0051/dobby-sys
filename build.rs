@@ -35,7 +35,9 @@ fn link_dobby() {
 
     println!("cargo:rustc-link-search=native={}", lib_path.display());
     println!("cargo:rustc-link-lib=static=dobby");
-    if target_os != "android" && !(target_os == "windows" && (target_env.is_empty() || target_env == "msvc")) {
+    if target_os == "ios" || target_os == "macos" {
+        println!("cargo:rustc-link-lib=c++");
+    } else if target_os != "android" && !(target_os == "windows" && (target_env.is_empty() || target_env == "msvc")) {
         println!("cargo:rustc-link-lib={}", stdlib);
     }
 }
